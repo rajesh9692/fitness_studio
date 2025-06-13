@@ -26,40 +26,7 @@ def classes_view(request):
             })
         return JsonResponse(data, safe=False)
 
-    # elif request.method == 'POST':
-    #     try:
-    #         body = json.loads(request.body)
-    #         name = body.get('name')
-    #         date_time = body.get('date_time')
-    #         instructor = body.get('instructor')
-    #         available_slots = body.get('available_slots', 10)
 
-    #         if not (name and date_time and instructor):
-    #             return JsonResponse({'error': 'Name, date_time, and instructor are required'}, status=400)
-
-    #         fitness_class = FitnessClass.objects.create(
-    #             name=name,
-    #             date_time=date_time,
-    #             instructor=instructor,
-    #             available_slots=available_slots
-    #         )
-
-    #         return JsonResponse({
-    #             'message': 'Class created successfully',
-    #             'class': {
-    #                 'id': fitness_class.id,
-    #                 'name': fitness_class.name,
-    #                 'date_time': fitness_class.date_time.strftime("%Y-%m-%dT%H:%M:%S"),
-    #                 'instructor': fitness_class.instructor,
-    #                 'available_slots': fitness_class.available_slots
-    #             }
-    #         }, status=201)
-            
-    #     except json.JSONDecodeError:
-    #         return JsonResponse({'error': 'Invalid JSON'}, status=400)
-
-    # else:
-    #     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
 
@@ -99,9 +66,9 @@ def post_book_class(request):
             })
 
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
-
-
+            return 
+        
+        
 @csrf_exempt
 def get_bookings(request):
     if request.method == 'GET':
@@ -110,14 +77,18 @@ def get_bookings(request):
             return JsonResponse({'error': 'Email is required'}, status=400)
 
         bookings = Booking.objects.filter(client_email=email)
+        if not bookings.exists():
+            return JsonResponse({'message': 'No bookings found for this email'}, status=404)
+
         data = [
             {
                 "class_name": b.fitness_class.name,
                 "date_time": localtime(b.fitness_class.date_time).strftime("%Y-%m-%dT%H:%M:%S"),
-                "instructor": b.fitness_class.instructor
-            }
-            for b in bookings
+                "instructor": b.fitness_class.instructor,
+                "client_name": b.client_name,
+                "client_email": b.client_email,
+            } for b in bookings
         ]
-        return JsonResponse({'bookings': data}, status=200)
-
-    return JsonResponse({'error': 'Method not allowed'}, status=405)
+        return JsonResponse({'bookings': data}, status=200, safe=False)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
