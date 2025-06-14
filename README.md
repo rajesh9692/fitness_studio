@@ -40,7 +40,7 @@ A simple Django backend to manage fitness classes and client bookings. This proj
 python -m venv venv
 
 # Windows:
-venv\Scripts\activate
+.venv\Scripts\activate
 
 # macOS/Linux:
 source venv/bin/activate
@@ -72,13 +72,86 @@ python manage.py runserver
 | GET    | `/bookings/`        | Retrieve bookings by client email ,here email pass on body in json format |
 
 
-7. Example JSON Payloads
+7. API work's
+🔧 How It Works (Step-by-Step)
+✅ Step 1: POST Data to /classes_view/ (Create a New Fitness Class)
+Endpoint: GET http://127.0.0.1:8000/classes/
+Body (raw JSON):
+This endpoint handles POST requests to create a new fitness class.
+
+Sample JSON to post in Postman:
+{
+  "name": "Zumba",
+  "date_time": "2025-06-15T10:00:00",
+  "instructor": "Mr Alexa",
+  "available_slots": 10
+}
+If everything is correct, the response will be like:
+
+{
+  "id": 1,
+  "name": "Zumba",
+  "date_time": "2025-06-15T10:00:00",
+  "instructor": "MR Alexa",
+  "available_slots": 10
+}
+Note: That "id": 1 is the class_id you'll use in the next step.
 
 
 
+✅ Step 2: POST to /book/ (Book a Spot in a Class)
+Endpoint: GET http://127.0.0.1:8000/book/
+Body (raw JSON):
+Now you can use the class ID (1 from above) to book a slot in the class using your booking API.
 
-7.Running Tests
+POST body:
+{
+  "class_id": 1,
+  "client_name": "Amit",
+  "client_email": "amit2000@example.com"
+}
+Expected Response:
+
+{
+  "message": "Booking successful",
+  "remaining_slots": 9,
+  "posted_data": {
+    "class_id": 1,
+    "client_name": "Amit",
+    "client_email": "amit2000@gmail.com"
+  }
+}
+   
+
+✅ Step 3: GET to /get_bookings/ (get all booking taking client_email on body)
+Endpoint: GET http://127.0.0.1:8000/bookings/
+Body (raw JSON):
+
+{
+  "email": "amit2000@gmail.com"
+}
+
+✅ Expected Response (if bookings exist)
+{
+  "bookings": [
+    {
+      "class_name": "Zumba",
+      "date_time": "2025-06-15T10:00:00",
+      "instructor": "MR Alexa",
+      "client_name": "Amit",
+      "client_email": "amit2000@gmail.com"
+    }
+  ]
+}
+
+
+If no bookings exist for the email:
+
+{
+  "message": "No bookings found for this email"
+}
+
+
+8.Running Tests
 Run the unit tests using:
 python manage.py test
-
-   
