@@ -3,9 +3,8 @@ from .models import FitnessClass, Booking
 
 @admin.register(FitnessClass)
 class FitnessClassAdmin(admin.ModelAdmin):
-    list_display = ('name', 'date_time', 'instructor', 'available_slots')
-    search_fields = ('name', 'instructor')
-    list_filter = ('instructor', 'date_time')
+    list_display = ('class_name', 'date_time', 'instructor', 'available_slots')
+    search_fields = ('class_name', 'instructor')
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):

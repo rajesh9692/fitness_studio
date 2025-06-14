@@ -17,8 +17,8 @@ def classes_view(request):
         for cls in FitnessClass.objects.all():
             local_dt = localtime(cls.date_time)
             data.append({
-                "id": cls.id,
-                "class_name": cls.name,
+                "class_id": cls.id,
+                "class_name": cls.class_name,
                 "date_time": local_dt.strftime("%Y-%m-%dT%H:%M:%S"),
                 "instructor": cls.instructor,
                 "available_slots": cls.available_slots
@@ -28,12 +28,12 @@ def classes_view(request):
     elif request.method == 'POST':
         try:
             body = json.loads(request.body)
-            name = body.get('name')
+            class_name = body.get('name')
             date_time = body.get('date_time')
             instructor = body.get('instructor')
             available_slots = body.get('available_slots')
 
-            if not (name and date_time and instructor and available_slots):
+            if not (class_name and date_time and instructor and available_slots):
                 return JsonResponse({'error': 'All fields are required'}, status=400)
 
             dt = parse_datetime(date_time)
@@ -44,7 +44,7 @@ def classes_view(request):
                 dt = make_aware(dt)
 
             fitness_class = FitnessClass.objects.create(
-                name=name,
+                class_name=class_name,
                 date_time=dt,
                 instructor=instructor,
                 available_slots=available_slots
@@ -52,7 +52,7 @@ def classes_view(request):
 
             local_dt = localtime(fitness_class.date_time)
             return JsonResponse({
-                "id": fitness_class.id,
+                "class_id": fitness_class.id,
                 "class_name": fitness_class.name,
                 "date_time": local_dt.strftime("%Y-%m-%dT%H:%M:%S"),
                 "instructor": fitness_class.instructor,
@@ -135,7 +135,7 @@ def get_bookings(request):
 
         data = [
             {
-                "class_name": b.fitness_class.name,
+                "class_name": b.fitness_class.class_name,  
                 "date_time": localtime(b.fitness_class.date_time).strftime("%Y-%m-%dT%H:%M:%S"),
                 "instructor": b.fitness_class.instructor,
                 "client_name": b.client_name,
