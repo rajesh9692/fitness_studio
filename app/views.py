@@ -18,7 +18,7 @@ def classes_view(request):
             local_dt = localtime(cls.date_time)
             data.append({
                 "id": cls.id,
-                "name": cls.name,
+                "class_name": cls.name,
                 "date_time": local_dt.strftime("%Y-%m-%dT%H:%M:%S"),
                 "instructor": cls.instructor,
                 "available_slots": cls.available_slots
