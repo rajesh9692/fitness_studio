@@ -4,7 +4,7 @@ class FitnessClass(models.Model):
     name = models.CharField(max_length=100)
     date_time = models.DateTimeField()
     instructor = models.CharField(max_length=100)
-    available_slots = models.PositiveIntegerField(default=10)
+    available_slots = models.PositiveIntegerField()
 
     def __str__(self):
         return f"{self.name} with {self.instructor} at {self.date_time}"
