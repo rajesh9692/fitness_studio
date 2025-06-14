@@ -69,7 +69,7 @@ python manage.py runserver
 | ------ | ------------------- | --------------------------------- |
 | GET    | `/classes/`         | Get list of all fitness classes   |
 | POST   | `/book/`            | Book a class (by class ID)        |
-| GET    | `/bookings/?email=` | Retrieve bookings by client email |
+| GET    | `/bookings/`        | Retrieve bookings by client email ,here email pass on body in json format |
 
 
 7. Example JSON Payloads
