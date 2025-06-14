@@ -136,7 +136,7 @@ Body (raw JSON):
   "bookings": [
     {
       "class_name": "Zumba",
-      "date_time": "2025-06-15T10:30:15",
+      "date_time": "2025-06-15T10:00:00",
       "instructor": "MR Alexa",
       "client_name": "Amit",
       "client_email": "amit2000@gmail.com"
