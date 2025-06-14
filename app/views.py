@@ -53,7 +53,7 @@ def classes_view(request):
             local_dt = localtime(fitness_class.date_time)
             return JsonResponse({
                 "id": fitness_class.id,
-                "name": fitness_class.name,
+                "class_name": fitness_class.name,
                 "date_time": local_dt.strftime("%Y-%m-%dT%H:%M:%S"),
                 "instructor": fitness_class.instructor,
                 "available_slots": fitness_class.available_slots
