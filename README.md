@@ -128,7 +128,7 @@ Endpoint: GET http://127.0.0.1:8000/bookings/
 Body (raw JSON):
 
 {
-  "email": "amit@example.com"
+  "email": "amit2000@gmail.com"
 }
 
 ✅ Expected Response (if bookings exist)
