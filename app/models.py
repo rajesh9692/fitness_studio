@@ -7,7 +7,7 @@ class FitnessClass(models.Model):
     available_slots = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.name} with {self.instructor} at {self.date_time}"
+        return f"{self.class_name} with {self.instructor} at {self.date_time}"
 
 class Booking(models.Model):
     fitness_class = models.ForeignKey(FitnessClass, on_delete=models.CASCADE)
@@ -15,4 +15,4 @@ class Booking(models.Model):
     client_email = models.EmailField()
 
     def __str__(self):
-        return f"{self.client_name} booked {self.fitness_class.name}"
+        return f"{self.client_name} booked {self.fitness_class.class_name}"
