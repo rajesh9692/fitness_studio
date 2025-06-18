@@ -81,7 +81,7 @@ This endpoint handles POST requests to create a new fitness class.
 
 Sample JSON to post in Postman:
 {
-  "name": "Zumba",
+  "class_name": "Zumba",
   "date_time": "2025-06-15T10:00:00",
   "instructor": "Mr Alexa",
   "available_slots": 10
@@ -89,8 +89,8 @@ Sample JSON to post in Postman:
 If everything is correct, the response will be like:
 
 {
-  "id": 1,
-  "name": "Zumba",
+  "class_id": 1,
+  "class_name": "Zumba",
   "date_time": "2025-06-15T10:00:00",
   "instructor": "MR Alexa",
   "available_slots": 10
